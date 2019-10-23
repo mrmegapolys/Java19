@@ -1,5 +1,3 @@
-import java.util.Map.Entry;
-
 public class HashTable<K, V> {
     private static final int DEFAULT_INITIAL_CAPACITY = 32; //is there a way to get rid of static?
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
@@ -14,6 +12,7 @@ public class HashTable<K, V> {
         this.capacity = initialCapacity;
         this.loadFactor = loadFactor;
         this.array = createArray(capacity);
+        this.size = 0;
     }
 
     public HashTable(int initialCapacity) {
@@ -25,16 +24,22 @@ public class HashTable<K, V> {
     }
 
 
-    public void put(K key, V value) {
+    public V put(K key, V value) {
         if ((float) (size + 1) / capacity > loadFactor) {
             resize();
         }
-        putValue(key, value);
+        size++;
+        return putEntry(key, value);
     }
 
-    public V get(K key) { //TODO: implement
+    public V get(K key) {
         int idx = getStartIndex(key);
         Entry<K, V> entry;
+
+        while ((entry = array[idx]) != null) {
+            if (entry.getKey() == key) return entry.getValue();
+            idx = getNextIndex(idx);
+        }
         return null;
     }
 
@@ -44,8 +49,8 @@ public class HashTable<K, V> {
         return null;
     }
 
-    public boolean containsKey(K key) { //TODO: implement
-        return false;
+    public boolean containsKey(K key) {
+        return get(key) != null;
     }
 
     public boolean containsValue(V value) {
@@ -72,12 +77,25 @@ public class HashTable<K, V> {
         array[idxFirst] = tmp;
     }
 
-    private void putValue(K key, V value) { //TODO: implement
+    private V putEntry(K key, V value) {
         int idx = getStartIndex(key);
+        Entry<K, V> entry;
+
+        while ((entry = array[idx]) != null) {
+            if (entry.getKey() == key) return entry.setValue(value);
+            idx = getNextIndex(idx);
+        }
+        array[idx] = new Entry<>(key, value);
+        return null;
     }
 
     private int getStartIndex(K key) {
         return Math.abs(key.hashCode() % this.capacity);
+    }
+
+    private int getNextIndex(int idx) {
+        idx = (idx + 1) % capacity;
+        return idx;
     }
 
     private void resize() {
@@ -86,7 +104,7 @@ public class HashTable<K, V> {
         array = createArray(capacity);
         for (Entry<K, V> entry : oldArray) {
             if (entry != null) {
-                putValue(entry.getKey(), entry.getValue());
+                putEntry(entry.getKey(), entry.getValue());
             }
         }
     }
