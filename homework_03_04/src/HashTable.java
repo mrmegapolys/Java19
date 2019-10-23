@@ -1,8 +1,10 @@
+import java.util.Map.Entry;
+
 public class HashTable<K, V> {
     private static final int DEFAULT_INITIAL_CAPACITY = 32; //is there a way to get rid of static?
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
-    private Node<K, V>[] array;
+    private Entry<K, V>[] array;
     private int size;  //TODO: implement size
     private int capacity;
     private float loadFactor;
@@ -30,48 +32,25 @@ public class HashTable<K, V> {
         putValue(key, value);
     }
 
-    public V get(K key) {
+    public V get(K key) { //TODO: implement
         int idx = getStartIndex(key);
-        int firstTombstone = -1;
-        Node<K, V> node;
-
-        while ((node = array[idx]) != null) {
-            if ((node.isTombstone()) && (firstTombstone == -1)) {
-                firstTombstone = idx;
-            }
-            if (node.getKey() != key) {//TODO: check tombstone
-                idx = (++idx) % capacity;
-                continue;
-            }
-            if (firstTombstone != -1) {
-                swapNodes(firstTombstone, idx);
-            }
-            return node.getValue();
-        }
-
+        Entry<K, V> entry;
         return null;
     }
 
-    public V remove(K key) {
+    public V remove(K key) { //TODO: implement
         int idx = getStartIndex(key);
-        Node<K, V> node;
-        while ((node = array[idx]) != null) {
-            if ((node.getKey() == key) && (!node.isTombstone())) {
-                node.setTombstone(true);
-                return node.getValue();
-            }
-            idx = (++idx) % capacity;
-        }
+        Entry<K, V> entry;
         return null;
     }
 
-    public boolean containsKey(K key) {
+    public boolean containsKey(K key) { //TODO: implement
         return false;
     }
 
     public boolean containsValue(V value) {
-        for (Node<K, V> node : array) {
-            if ((node != null) && (node.getValue() == value)) {
+        for (Entry<K, V> entry : array) {
+            if ((entry != null) && (entry.getValue() == value)) {
                 return true;
             }
         }
@@ -83,28 +62,18 @@ public class HashTable<K, V> {
     }
 
     @SuppressWarnings("unchecked")
-    private Node<K, V>[] createArray(int capacity) {
-        return new Node[capacity];
+    private Entry<K, V>[] createArray(int capacity) {
+        return new Entry[capacity];
     }
 
-    private void swapNodes(int idxFirst, int idxSecond) {
-        Node<K, V> tmp = array[idxSecond];
+    private void swapEntries(int idxFirst, int idxSecond) {
+        Entry<K, V> tmp = array[idxSecond];
         array[idxSecond] = array[idxFirst];
         array[idxFirst] = tmp;
     }
 
-    private void putValue(K key, V value) {
+    private void putValue(K key, V value) { //TODO: implement
         int idx = getStartIndex(key);
-        while (array[idx] != null) {
-            if (array[idx].isTombstone()) {
-                Node<K, V> node = new Node<>(key, value);
-                array[idx] = node;
-                return;
-            }
-            idx = (++idx) % capacity;
-        }
-        Node<K, V> node = new Node<>(key, value);
-        array[idx] = node;
     }
 
     private int getStartIndex(K key) {
@@ -112,13 +81,14 @@ public class HashTable<K, V> {
     }
 
     private void resize() {
-        Node<K, V>[] oldArray = array;
+        Entry<K, V>[] oldArray = array;
         capacity *= 2;
         array = createArray(capacity);
-        for (Node<K, V> node : oldArray) {
-            if ((node != null) && (!node.isTombstone())) {
-                putValue(node.getKey(), node.getValue());
+        for (Entry<K, V> entry : oldArray) {
+            if (entry != null) {
+                putValue(entry.getKey(), entry.getValue());
             }
         }
     }
+
 }
