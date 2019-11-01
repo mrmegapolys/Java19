@@ -13,7 +13,7 @@ public class Task1<T> {
         this.callable = callable;
     }
 
-    public T get() {
+    public T get() { //doesn't work
 
         if (!finished) {
             synchronized (this) {
