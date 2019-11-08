@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyCountMap<K> implements CountMap<K> {
-    private HashMap<K, Integer> storage;
+    private final HashMap<K, Integer> storage;
 
     public MyCountMap() {
         this.storage = new HashMap<>();
