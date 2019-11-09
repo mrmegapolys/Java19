@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 
-public class ReflectionUtils10 {
+public class ReflectionUtils {
     public static List<String> collectFieldName(Object o) {
         return getPropertyNames(o, Class::getDeclaredFields, 5);
     }

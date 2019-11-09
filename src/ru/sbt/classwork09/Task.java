@@ -2,7 +2,7 @@ package ru.sbt.classwork09;
 
 import java.util.concurrent.Callable;
 
-public class Task1<T> {
+public class Task<T> {
     private final Callable<T> callable;
 
     private T result;
@@ -11,7 +11,7 @@ public class Task1<T> {
     private volatile boolean finished = false;
     private volatile boolean inProgress = false;
 
-    public Task1(Callable<T> callable) {
+    public Task(Callable<T> callable) {
         this.callable = callable;
     }
 

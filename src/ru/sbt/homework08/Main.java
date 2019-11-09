@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class Main08 {
+public class Main {
     public static void main(String[] args) throws InterruptedException {
         Callable<Integer> callable = () -> {
             Thread.sleep(3_000);

@@ -3,7 +3,7 @@ package ru.sbt.classwork08;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main08 {
+public class Main {
     public static void main(String[] args) {
         //checkSemaphore();
         checkBarrier();

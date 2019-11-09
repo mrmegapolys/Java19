@@ -1,9 +1,9 @@
 package ru.sbt.classwork09;
 
-public class TaskRunner1<T> implements Runnable{
-    private final Task1<T> task;
+public class TaskRunner<T> implements Runnable{
+    private final Task<T> task;
 
-    public TaskRunner1(Task1<T> task) {
+    public TaskRunner(Task<T> task) {
         this.task = task;
     }
 

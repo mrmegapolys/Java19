@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class Main09 {
+public class Main {
     public static void main(String[] args) throws InterruptedException {
         Callable<Integer> callable = () -> {
             Thread.sleep(2_000);
             return 12345;
         };
-        Task1<Integer> task = new Task1<>(callable);
+        Task<Integer> task = new Task<>(callable);
 
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            threads.add(new Thread(new TaskRunner1<>(task)));
+            threads.add(new Thread(new TaskRunner<>(task)));
         }
         System.out.println("start");
         for (int i = 0; i < 3; i++) {
