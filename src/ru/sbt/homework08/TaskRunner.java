@@ -1,9 +1,9 @@
 package ru.sbt.homework08;
 
 public class TaskRunner<T> implements Runnable{
-    private final Task<T> task;
+    private final ITask<T> task;
 
-    public TaskRunner(Task<T> task) {
+    public TaskRunner(ITask<T> task) {
         this.task = task;
     }
 

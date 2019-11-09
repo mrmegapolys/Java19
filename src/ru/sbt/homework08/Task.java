@@ -2,7 +2,7 @@ package ru.sbt.homework08;
 
 import java.util.concurrent.Callable;
 
-public class Task<T> {
+public class Task<T> implements ITask<T> {
     private final Callable<? extends T> callable;
     private boolean notDone;
     private boolean noException;

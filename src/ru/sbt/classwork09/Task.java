@@ -1,8 +1,10 @@
 package ru.sbt.classwork09;
 
+import ru.sbt.homework08.ITask;
+
 import java.util.concurrent.Callable;
 
-public class Task<T> {
+public class Task<T> implements ITask<T> {
     private final Callable<? extends T> callable;
 
     private T result;
