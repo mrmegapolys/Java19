@@ -33,11 +33,12 @@ public class Serializer {
 
         for (Field field : fields) {
             field.setAccessible(true);
-            Object fieldValue = null;
+            Object fieldValue;
             try {
                 fieldValue = field.get(object);
-            } catch (IllegalAccessException ignored) {
-            } //this is never going to happen because of setAccessible
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
 
             Object value;
             if (fieldValue == null || isWrapperType(fieldValue) || isArray(fieldValue) || isCollectionOrMap(fieldValue))  {
