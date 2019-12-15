@@ -11,9 +11,9 @@ public interface CountMap<K> {
 
     int size();
 
-    void addAll(CountMap<K> source);
+    void addAll(CountMap<? extends K> source);
 
     Map<K, Integer> toMap();
 
-    void toMap(Map<K, Integer> destination);
+    void toMap(Map<? super K, ? super Integer> destination);
 }

@@ -38,12 +38,10 @@ public class MyCountMap<K> implements CountMap<K> {
     }
 
     @Override
-    public void addAll(CountMap<K> source) {
-        for (Map.Entry<K, Integer> entry : source.toMap().entrySet()) {
-            for (int counter = 0; counter < entry.getValue(); ++counter) {
-                add(entry.getKey());
-            }
-        }
+    public void addAll(CountMap<? extends K> source) {
+        source.toMap().forEach((key, value) -> {
+            for (int counter = 0; counter < value; ++counter) add(key);
+        });
     }
 
     @Override
@@ -54,10 +52,8 @@ public class MyCountMap<K> implements CountMap<K> {
     }
 
     @Override
-    public void toMap(Map<K, Integer> destination) {
-        for (Map.Entry<K, Integer> entry : storage.entrySet()) {
-            destination.put(entry.getKey(), entry.getValue());
-        }
+    public void toMap(Map<? super K, ? super Integer> destination) {
+        storage.forEach(destination::put);
     }
 
 }
