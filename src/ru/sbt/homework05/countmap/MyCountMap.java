@@ -2,6 +2,7 @@ package ru.sbt.homework05.countmap;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MyCountMap<K> implements CountMap<K> {
     private final HashMap<K, Integer> storage;
@@ -22,14 +23,12 @@ public class MyCountMap<K> implements CountMap<K> {
 
     @Override
     public int getCount(K key) {
-        Integer counter = storage.get(key);
-        return (counter == null) ? 0 : counter;
+        return Objects.requireNonNullElse(storage.get(key), 0);
     }
 
     @Override
     public int remove(K key) {
-        Integer counter = storage.remove(key);
-        return (counter == null) ? 0 : counter;
+        return Objects.requireNonNullElse(storage.remove(key), 0);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class MyCountMap<K> implements CountMap<K> {
 
     @Override
     public void toMap(Map<? super K, ? super Integer> destination) {
-        storage.forEach(destination::put);
+        destination.putAll(storage);
     }
 
 }
