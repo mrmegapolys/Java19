@@ -41,13 +41,13 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
         return entry == null ? null : entry.getValue();
     }
 
-    public V remove(K key) { //TODO: implement
+    public V remove(K key) {
         int idx = findEntry(key);
-        Entry<K, V> entry = array[idx];
-        if (entry == null) return null;
-
+        if (array[idx] == null) return null;
+        V value = array[idx].getValue();
+        removeEntry(idx);
         size--;
-        return null;
+        return value;
     }
 
     public boolean containsKey(K key) {
@@ -73,7 +73,7 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
         while (true) {
             Entry<K, V> entry = array[idx];
             if (entry == null || Objects.equals(entry.getKey(), key)) return idx;
-            idx = (idx + 1) % capacity;
+            idx = getNextIdx(idx);
         }
     }
 
@@ -84,27 +84,43 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
             size++;
         }
 
-        Entry<K, V> entry = array[idx];
-        V oldValue = entry.getValue();
-        entry.setValue(value);
+        V oldValue = array[idx].getValue();
+        array[idx].setValue(value);
         return oldValue;
     }
 
-    private void swapEntries(int idxFirst, int idxSecond) {
-        Entry<K, V> tmp = array[idxSecond];
-        array[idxSecond] = array[idxFirst];
-        array[idxFirst] = tmp;
+    private void removeEntry(int lastFreeIndex) {
+        array[lastFreeIndex] = null;
+        int currIdx = lastFreeIndex;
+        while (true) {
+            currIdx = getNextIdx(currIdx);
+            if (array[currIdx] == null) return;
+            int startIdx = getStartIndex(array[currIdx].getKey());
+            if ((lastFreeIndex < currIdx) ?
+                    (lastFreeIndex >= startIdx) || (startIdx > currIdx) :
+                    (lastFreeIndex >= startIdx) && (startIdx > currIdx)
+            ) continue;
+            array[lastFreeIndex] = array[currIdx];
+            array[currIdx] = null;
+            lastFreeIndex = currIdx;
+        }
     }
 
     private int getStartIndex(K key) {
         return Math.abs(key.hashCode() % this.capacity);
     }
 
+    private int getNextIdx(int idx) {
+        return (idx + 1) % capacity;
+    }
+
     private void resize() {
         Entry<K, V>[] oldArray = array;
         capacity *= 2;
         array = createArray(capacity);
-        Arrays.stream(oldArray).filter(Objects::nonNull).forEach(entry -> putEntry(entry.getKey(), entry.getValue()));
+        Arrays.stream(oldArray)
+                .filter(Objects::nonNull)
+                .forEach(entry -> putEntry(entry.getKey(), entry.getValue()));
     }
 
 }
