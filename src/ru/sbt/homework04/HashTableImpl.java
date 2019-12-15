@@ -30,7 +30,7 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
 
 
     public V put(K key, V value) {
-        if ((float) (size + 1) / capacity > loadFactor) resize();
+        if ((float) size / capacity >= loadFactor) resize();
         return putEntry(key, value);
     }
 
@@ -66,7 +66,7 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
         return new Entry[capacity];
     }
 
-    private int findEntry(K key) { //TODO: fix infinite loop if array is full
+    private int findEntry(K key) {
         int idx = getStartIndex(key);
         while (true) {
             Entry<K, V> entry = array[idx];
