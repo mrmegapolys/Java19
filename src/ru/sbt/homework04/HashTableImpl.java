@@ -31,7 +31,12 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
 
     public V put(K key, V value) {
         if ((float) size / capacity >= loadFactor) resize();
-        return putEntry(key, value);
+        int idx = findEntry(key);
+        if (array[idx] == null) {
+            array[idx] = new Entry<>(key, null);
+            size++;
+        }
+        return array[idx].setValue(value);
     }
 
     public V get(K key) {
@@ -75,15 +80,6 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
         }
     }
 
-    private V putEntry(K key, V value) {
-        int idx = findEntry(key);
-        if (array[idx] == null) {
-            array[idx] = new Entry<>(key, null);
-            size++;
-        }
-        return array[idx].setValue(value);
-    }
-
     private void removeEntry(int lastFreeIndex) {
         array[lastFreeIndex] = null;
         int currIdx = lastFreeIndex;
@@ -115,7 +111,7 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
         array = createArray(capacity);
         Arrays.stream(oldArray)
                 .filter(Objects::nonNull)
-                .forEach(entry -> putEntry(entry.getKey(), entry.getValue()));
+                .forEach(entry -> array[findEntry(entry.getKey())] = new Entry<>(entry.getKey(), entry.getValue()));
     }
 
 }
