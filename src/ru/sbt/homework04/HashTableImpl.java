@@ -30,9 +30,7 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
 
 
     public V put(K key, V value) {
-        if ((float) (size + 1) / capacity > loadFactor) {
-            resize();
-        }
+        if ((float) (size + 1) / capacity > loadFactor) resize();
         return putEntry(key, value);
     }
 
@@ -55,7 +53,7 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
     }
 
     public boolean containsValue(V value) {
-        return Arrays.stream(array).anyMatch(entry -> (entry != null) && (entry.getValue() == value));
+        return Arrays.stream(array).anyMatch(entry -> (entry != null) && (Objects.equals(entry.getValue(), value)));
     }
 
     public int size() {
@@ -83,10 +81,7 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
             array[idx] = new Entry<>(key, null);
             size++;
         }
-
-        V oldValue = array[idx].getValue();
-        array[idx].setValue(value);
-        return oldValue;
+        return array[idx].setValue(value);
     }
 
     private void removeEntry(int lastFreeIndex) {
