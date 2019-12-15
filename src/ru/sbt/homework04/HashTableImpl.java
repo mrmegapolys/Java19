@@ -97,8 +97,8 @@ public class HashTableImpl<K, V> implements HashTable<K, V> {
             if (array[currIdx] == null) return;
             int startIdx = getStartIndex(array[currIdx].getKey());
             if ((lastFreeIndex < currIdx) ?
-                    (lastFreeIndex >= startIdx) || (startIdx > currIdx) :
-                    (lastFreeIndex >= startIdx) && (startIdx > currIdx)
+                    (lastFreeIndex < startIdx) && (startIdx <= currIdx) :
+                    (lastFreeIndex < startIdx) || (startIdx <= currIdx)
             ) continue;
             array[lastFreeIndex] = array[currIdx];
             array[currIdx] = null;
