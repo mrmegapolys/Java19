@@ -15,6 +15,7 @@ public class Main {
     }
 
     public static <T> void checkTask(ITask<T> task) throws InterruptedException {
+        System.out.println("Start");
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             threads.add(new Thread(new TaskRunner<>(task)));

@@ -4,37 +4,55 @@ import java.util.concurrent.Callable;
 
 public class Task<T> implements ITask<T> {
     private final Callable<? extends T> callable;
-    private boolean notDone;
-    private boolean noException;
+    private volatile boolean done;
+    private volatile boolean inProgress;
     private T result;
     private Exception caughtException;
 
     public Task(Callable<? extends T> callable) {
         this.callable = callable;
-        notDone = true;
+        done = false;
+        inProgress = false;
     }
 
+    @Override
     public T get() {
-        if (notDone) {
+        while (!done) {
             synchronized (this) {
-                if (notDone) calculateResult();
+                if (!done && !inProgress) {
+                    inProgress = true;
+                    break;
+                } else if (!done) doAwait();
             }
         }
 
-        if (noException) return result;
-        throw new RuntimeException(caughtException);
+        if (!done) calculateResult();
+        return getResult();
+    }
+
+    private void doAwait() {
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void calculateResult() {
         try {
             result = callable.call();
-            noException = true;
         } catch (Exception e) {
             caughtException = e;
-            noException = false;
+            result = null;
         }
-        notDone = false;
+        done = true;
+        synchronized (this) {
+            this.notifyAll();
+        }
     }
 
-
+    private T getResult() {
+        if (result == null) throw new RuntimeException(caughtException);
+        return result;
+    }
 }
