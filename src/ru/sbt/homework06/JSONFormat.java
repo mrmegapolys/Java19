@@ -17,11 +17,6 @@ public class JSONFormat implements Format {
     }
 
     @Override
-    public String getResult() {
-        return builder.toString();
-    }
-
-    @Override
     public String writeMap(Map<String, String> map) {
         StringBuilder builder = new StringBuilder();
         builder.append("{\n");
@@ -39,14 +34,12 @@ public class JSONFormat implements Format {
     }
 
     @Override
-    public String writeArray(List<String> list) {
+    public String writeCollection(List<String> list) {
         StringBuilder builder = new StringBuilder();
-        builder.append("[");
-        currentIndent++;
+        builder.append("[\n");
         for (String s : list) {
             builder.append(addIndent(s, getIndent(indent * currentIndent))).append(",\n");
         }
-        currentIndent--;
         builder.append("]");
         return builder.toString();
     }
@@ -55,10 +48,9 @@ public class JSONFormat implements Format {
         String[] splitted = raw.split("\n");
         if (splitted.length == 1) return raw;
         StringBuilder builder = new StringBuilder(splitted[0]);
-        for (int i = 1; i < splitted.length - 1; i++) {
+        for (int i = 1; i < splitted.length; i++) {
             builder.append("\n").append(indent).append(splitted[i]);
         }
-        builder.append("\n").append(indent).append(splitted[splitted.length - 1]);
         return builder.toString();
     }
 

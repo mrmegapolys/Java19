@@ -2,7 +2,6 @@ package ru.sbt.homework06;
 
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -49,7 +48,7 @@ public class Serializer {
 
     private String serializeCollection(Collection<?> collection) {
         List<String> result = collection.stream().map(this::serializeObject).collect(toList());
-        return format.writeArray(result);
+        return format.writeCollection(result);
     }
 
     private boolean isCollection(Object o) {

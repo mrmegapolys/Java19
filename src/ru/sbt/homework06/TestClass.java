@@ -11,6 +11,7 @@ public class TestClass {
     private Integer notInitialized;
     private final Object nullValue = null;
     private final Map<Person, Person> map;
+    private Integer[] ints = {1, 2};
 
     public TestClass(Person[] personArray, List<Person> personList, String string, int intValue, Map<Person, Person> map) {
         this.personArray = personArray;
