@@ -19,8 +19,7 @@ public class Serializer {
     }
 
     private String serializeObject(Object o) {
-        if (o == null) return serializePrimitive(null);
-        else if (isPrimitive(o)) return serializePrimitive(o);
+        if (o == null) return "null";
         else if (isWrapperType(o)) return serializeWrapper(o);
         else if (isArray(o)) return serializeCollection((asList((Object[]) o)));
         else if (isCollection(o) || isArray(o)) return serializeCollection((Collection<?>) o);
@@ -28,12 +27,30 @@ public class Serializer {
         else return serializeFields(o);
     }
 
-    private String serializeWrapper(Object o) {
-        return o.toString();
+    private static boolean isWrapperType(Object o) {
+        return wrapperTypes.contains(o.getClass());
     }
 
-    private String serializeFields(Object o) {
-        return serializeMap(getDeclaredFields(o));
+    private boolean isArray(Object o) {
+        return o.getClass().isArray();
+    }
+
+    private boolean isCollection(Object o) {
+        return o instanceof Collection;
+    }
+
+    private boolean isMap(Object o) {
+        return o instanceof Map;
+    }
+
+    private String serializeWrapper(Object o) {
+        if (o instanceof Number || o instanceof Boolean) return o.toString();
+        else return "\"" + o.toString() + "\"";
+    }
+
+    private String serializeCollection(Collection<?> collection) {
+        List<String> result = collection.stream().map(this::serializeObject).collect(toList());
+        return format.writeCollection(result);
     }
 
     private String serializeMap(Map<?, ?> map) {
@@ -42,25 +59,8 @@ public class Serializer {
         return format.writeMap(result);
     }
 
-    private boolean isMap(Object o) {
-        return o instanceof Map;
-    }
-
-    private String serializeCollection(Collection<?> collection) {
-        List<String> result = collection.stream().map(this::serializeObject).collect(toList());
-        return format.writeCollection(result);
-    }
-
-    private boolean isCollection(Object o) {
-        return o instanceof Collection;
-    }
-
-    private boolean isPrimitive(Object o) {
-        return o.getClass().isPrimitive();
-    }
-
-    private String serializePrimitive(Object o) {
-        return String.valueOf(o);
+    private String serializeFields(Object o) {
+        return serializeMap(getDeclaredFields(o));
     }
 
     private Map<String, Object> getDeclaredFields(Object o) {
@@ -80,15 +80,6 @@ public class Serializer {
             throw new RuntimeException(e);
         }
         return map;
-    }
-
-
-    private static boolean isWrapperType(Object o) {
-        return wrapperTypes.contains(o.getClass());
-    }
-
-    private boolean isArray(Object o) {
-        return o.getClass().isArray();
     }
 
     private static Set<Class<?>> getWrapperTypes() {

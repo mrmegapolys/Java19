@@ -1,6 +1,5 @@
 package ru.sbt.homework06;
 
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class Main {
@@ -10,16 +9,8 @@ public class Main {
 
     private static void checkSerializer() {
         TestClass testClass = new TestClass(getArray(), getList(), "string", 10, getMap());
-
         Serializer serializer = new Serializer(new JSONFormat(4));
-//        Map<String, Map<String, String>> map = new HashMap<>();
-//        map.put("A", new HashMap<>());
-//        map.get("A").put("A", "B");
-//        map.get("A").put("C", "D");
-//        Person person = new Person("Alex", 20, map);
-        String serialized = serializer.serialize(testClass);
-        System.out.println(serialized);
-
+        System.out.println(serializer.serialize(testClass));
     }
 
     private static Map<Person, Person> getMap() {
