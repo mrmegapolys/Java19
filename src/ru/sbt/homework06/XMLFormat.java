@@ -3,42 +3,45 @@ package ru.sbt.homework06;
 import java.util.List;
 import java.util.Map;
 
-public class XMLFormat implements Format {
-    final int indentValue;
-    private int currentIndent = 0;
-
-    public XMLFormat(int indentValue) {
-        this.indentValue = indentValue;
-    }
-
-    private String getIndent() {
-        return new String(new char[indentValue * currentIndent]).replace("\0", " ");
+public class XMLFormat extends AbstractFormat {
+    public XMLFormat(int indent) {
+        super(indent);
     }
 
     @Override
-    public String writeMap(Map<String, String> map) {
-        StringBuilder builder = new StringBuilder();
-        currentIndent++;
-        builder.append("\n");
+    protected String onMapStart() {
+        return "\n";
+    }
+
+    @Override
+    protected void processMapContents(Map<String, String> map, StringBuilder builder) {
         map.forEach((key, value) ->
                 builder.append(getOpeningTag(key))
                         .append(addIndent(value, getIndent()))
                         .append(getClosingTag(key)).append("\n"));
-        currentIndent--;
-        return builder.toString();
     }
 
     @Override
-    public String writeCollection(List<String> list) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("\n");
-        currentIndent++;
-        list.forEach(s -> builder.append(getElementOpeningTag())
+    protected String onMapFinish() {
+        return "";
+    }
+
+    @Override
+    protected String onCollectionStart() {
+        return "\n";
+    }
+
+    @Override
+    protected void processCollectionContents(List<String> list, StringBuilder builder) {
+        list.forEach(s -> builder.append(getOpeningTag("element"))
                 .append(addIndent(s, getIndent()))
-                .append(getElementClosingTag())
+                .append(getClosingTag("element"))
                 .append("\n"));
-        currentIndent--;
-        return builder.toString();
+    }
+
+    @Override
+    protected String onCollectionFinish() {
+        return "";
     }
 
     @Override
@@ -48,11 +51,11 @@ public class XMLFormat implements Format {
 
     @Override
     public String writeNumberOrBool(Object o) {
-        return writeString(o);
+        return writeAsString(o);
     }
 
     @Override
-    public String writeString(Object o) {
+    public String writeAsString(Object o) {
         return o.toString();
     }
 
@@ -71,13 +74,5 @@ public class XMLFormat implements Format {
 
     private String getClosingTag(String s) {
         return "</" + s + ">";
-    }
-
-    private String getElementOpeningTag() {
-        return getOpeningTag("element");
-    }
-
-    private String getElementClosingTag() {
-        return getClosingTag("element");
     }
 }

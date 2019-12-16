@@ -12,5 +12,5 @@ public interface Format {
 
     String writeNumberOrBool(Object o);
 
-    String writeString(Object o);
+    String writeAsString(Object o);
 }
