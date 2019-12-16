@@ -9,8 +9,11 @@ public class Main {
 
     private static void checkSerializer() {
         TestClass testClass = new TestClass(getArray(), getList(), "string", 10, getMap());
-        Serializer serializer = new Serializer(new JSONFormat(4));
-        System.out.println(serializer.serialize(testClass));
+        Serializer jsonSerializer = new Serializer(new JSONFormat(4));
+        System.out.println(jsonSerializer.serialize(testClass));
+
+        Serializer xmlSerializer = new Serializer(new XMLFormat(4));
+        System.out.println(xmlSerializer.serialize(testClass));
     }
 
     private static Map<Person, Person> getMap() {
