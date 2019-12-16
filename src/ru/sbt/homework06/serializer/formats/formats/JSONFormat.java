@@ -19,7 +19,8 @@ public class JSONFormat extends AbstractFormat {
     protected void processMapContents(Map<String, String> map, StringBuilder builder) {
         map.forEach((key, value) -> builder.append(getIndent())
                 .append("\"").append(key).append("\": ")
-                .append(addIndent(value, getIndent())).append(",\n"));
+                .append(addIndent(value, getIndent()))
+                .append(",\n"));
         builder.deleteCharAt(builder.length() - 2);
     }
 
