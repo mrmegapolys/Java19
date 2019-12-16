@@ -1,4 +1,6 @@
-package ru.sbt.homework06;
+package ru.sbt.homework06.serializer;
+
+import ru.sbt.homework06.serializer.formats.Format;
 
 import java.lang.reflect.Field;
 import java.util.*;

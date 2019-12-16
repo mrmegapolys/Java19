@@ -1,4 +1,6 @@
-package ru.sbt.homework06;
+package ru.sbt.homework06.serializer.formats.formats;
+
+import ru.sbt.homework06.serializer.formats.AbstractFormat;
 
 import java.util.List;
 import java.util.Map;

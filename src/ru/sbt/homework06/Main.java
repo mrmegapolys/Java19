@@ -1,5 +1,10 @@
 package ru.sbt.homework06;
 
+import ru.sbt.homework06.serializer.MySerializer;
+import ru.sbt.homework06.serializer.Serializer;
+import ru.sbt.homework06.serializer.formats.formats.JSONFormat;
+import ru.sbt.homework06.serializer.formats.formats.XMLFormat;
+
 import java.util.*;
 
 public class Main {
