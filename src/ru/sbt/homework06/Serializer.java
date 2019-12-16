@@ -19,7 +19,7 @@ public class Serializer {
     }
 
     private String serializeObject(Object o) {
-        if (o == null) return "null";
+        if (o == null) return format.writeNull();
         else if (isWrapperType(o)) return serializeWrapper(o);
         else if (isArray(o)) return serializeCollection((asList((Object[]) o)));
         else if (isCollection(o) || isArray(o)) return serializeCollection((Collection<?>) o);
@@ -44,8 +44,8 @@ public class Serializer {
     }
 
     private String serializeWrapper(Object o) {
-        if (o instanceof Number || o instanceof Boolean) return o.toString();
-        else return "\"" + o.toString() + "\"";
+        if (o instanceof Number || o instanceof Boolean) return format.writeNumberOrBool(o);
+        else return format.writeString(o);
     }
 
     private String serializeCollection(Collection<?> collection) {

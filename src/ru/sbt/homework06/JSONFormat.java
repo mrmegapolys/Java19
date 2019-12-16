@@ -11,7 +11,7 @@ public class JSONFormat implements Format {
         this.indentValue = indent;
     }
 
-    String getIndent() {
+    private String getIndent() {
         return new String(new char[indentValue * currentIndent]).replace("\0", " ");
     }
 
@@ -45,6 +45,21 @@ public class JSONFormat implements Format {
         if (!inlineable) builder.deleteCharAt(builder.length() - 2);
         builder.append("]");
         return builder.toString();
+    }
+
+    @Override
+    public String writeNull() {
+        return "null";
+    }
+
+    @Override
+    public String writeNumberOrBool(Object o) {
+        return o.toString();
+    }
+
+    @Override
+    public String writeString(Object o) {
+        return "\"" + o.toString() + "\"";
     }
 
     private boolean inlineable(List<String> list) {

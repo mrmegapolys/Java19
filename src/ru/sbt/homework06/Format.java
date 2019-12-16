@@ -7,4 +7,10 @@ public interface Format {
     String writeMap(Map<String, String> map);
 
     String writeCollection(List<String> list);
+
+    String writeNull();
+
+    String writeNumberOrBool(Object o);
+
+    String writeString(Object o);
 }
