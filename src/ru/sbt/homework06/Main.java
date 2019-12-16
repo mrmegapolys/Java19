@@ -9,10 +9,10 @@ public class Main {
 
     private static void checkSerializer() {
         TestClass testClass = new TestClass(getArray(), getList(), "string", 10, getMap());
-        MySerializer jsonSerializer = new MySerializer(new JSONFormat(4));
+        Serializer jsonSerializer = new MySerializer(new JSONFormat(4));
         System.out.println(jsonSerializer.serialize(testClass));
 
-        MySerializer xmlSerializer = new MySerializer(new XMLFormat(4));
+        Serializer xmlSerializer = new MySerializer(new XMLFormat(4));
         System.out.println(xmlSerializer.serialize(testClass));
     }
 

@@ -6,7 +6,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
-public class MySerializer {
+public class MySerializer implements Serializer {
     private static final Set<Class<?>> wrapperTypes = getWrapperTypes();
     private final Format format;
 
