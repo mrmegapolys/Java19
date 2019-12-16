@@ -7,6 +7,7 @@ import java.lang.reflect.Proxy;
 public class TimerProxy implements InvocationHandler {
     private final Object delegate;
 
+    @SuppressWarnings("unchecked")
     public static <T> T timer(T delegate) {
         return (T) Proxy.newProxyInstance(
                 ClassLoader.getSystemClassLoader(),
@@ -20,11 +21,10 @@ public class TimerProxy implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
+    public Object invoke(Object o, Method method, Object[] args) throws Throwable {
         long startTime = System.currentTimeMillis();
-        Object result = method.invoke(delegate, objects);
-        long finishTime = System.currentTimeMillis();
-        System.out.println(finishTime - startTime);
+        Object result = method.invoke(delegate, args);
+        System.out.println(System.currentTimeMillis() - startTime);
         return result;
     }
 }

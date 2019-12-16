@@ -2,19 +2,15 @@ package ru.sbt.classwork06;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 public class ReflectionUtils {
     public static List<String> getMethodName (Object o) {
-        Class<?> clazz = o.getClass();
-        List<String> names = new ArrayList<>();
-        for (Method method: clazz.getMethods()) {
-            names.add(method.getName());
-        }
-        return names;
+        return Arrays.stream(o.getClass().getMethods())
+                .map(Method::getName)
+                .collect(toList());
     }
 
     public static Map<String, Object> getAllFieldValues(Object o) throws IllegalAccessException {
