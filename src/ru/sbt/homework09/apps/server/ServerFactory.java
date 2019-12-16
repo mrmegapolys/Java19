@@ -1,4 +1,4 @@
-package ru.sbt.shop.apps.server;
+package ru.sbt.homework09.apps.server;
 
 
 public class ServerFactory {

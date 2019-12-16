@@ -1,13 +1,13 @@
-package ru.sbt.shop.apps.client;
+package ru.sbt.homework09.apps.client;
 
-import ru.sbt.shop.Request;
+import ru.sbt.homework09.Request;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.net.Socket;
 
-import static ru.sbt.shop.apps.Utils.readFromSocket;
-import static ru.sbt.shop.apps.Utils.writeToSocket;
+import static ru.sbt.homework09.apps.Utils.readFromSocket;
+import static ru.sbt.homework09.apps.Utils.writeToSocket;
 
 public class ClientProxy implements InvocationHandler {
     private final String host;

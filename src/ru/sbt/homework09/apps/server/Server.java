@@ -1,6 +1,6 @@
-package ru.sbt.shop.apps.server;
+package ru.sbt.homework09.apps.server;
 
-import ru.sbt.shop.Request;
+import ru.sbt.homework09.Request;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -9,8 +9,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
 
-import static ru.sbt.shop.apps.Utils.readFromSocket;
-import static ru.sbt.shop.apps.Utils.writeToSocket;
+import static ru.sbt.homework09.apps.Utils.readFromSocket;
+import static ru.sbt.homework09.apps.Utils.writeToSocket;
 
 public class Server {
     private final Object delegate;

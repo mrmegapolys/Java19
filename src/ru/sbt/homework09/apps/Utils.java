@@ -1,4 +1,4 @@
-package ru.sbt.shop.apps;
+package ru.sbt.homework09.apps;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

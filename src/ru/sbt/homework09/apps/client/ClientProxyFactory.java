@@ -1,4 +1,4 @@
-package ru.sbt.shop.apps.client;
+package ru.sbt.homework09.apps.client;
 
 import java.lang.reflect.Proxy;
 

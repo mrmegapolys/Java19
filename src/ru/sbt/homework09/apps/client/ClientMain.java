@@ -1,7 +1,7 @@
-package ru.sbt.shop.apps.client;
+package ru.sbt.homework09.apps.client;
 
-import ru.sbt.shop.Order;
-import ru.sbt.shop.orderprocessors.OrderProcessor;
+import ru.sbt.homework09.Order;
+import ru.sbt.homework09.orderprocessors.OrderProcessor;
 
 public class ClientMain {
     public static void main(String[] args) {

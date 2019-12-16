@@ -1,7 +1,7 @@
-package ru.sbt.shop.apps.server;
+package ru.sbt.homework09.apps.server;
 
-import ru.sbt.shop.orderprocessors.processors.OneMoreProcessor;
-import ru.sbt.shop.orderprocessors.processors.Processor;
+import ru.sbt.homework09.orderprocessors.processors.OneMoreProcessor;
+import ru.sbt.homework09.orderprocessors.processors.Processor;
 
 public class ServerMain {
     public static void main(String[] args) {

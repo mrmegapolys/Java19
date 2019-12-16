@@ -1,4 +1,4 @@
-package ru.sbt.shop;
+package ru.sbt.homework09;
 
 import java.io.Serializable;
 import java.util.Arrays;
