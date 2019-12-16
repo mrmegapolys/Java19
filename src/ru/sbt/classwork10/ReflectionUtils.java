@@ -2,11 +2,10 @@ package ru.sbt.classwork10;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 public class ReflectionUtils {
@@ -14,7 +13,7 @@ public class ReflectionUtils {
         return getPropertyNames(o, Class::getDeclaredFields, 5);
     }
 
-    public static <T> List<String> collectMethodName(Objects o, Function<Class<?>, T[]> propertyGetter) {
+    public static List<String> collectMethodName(Object o) {
         return getPropertyNames(o, Class::getDeclaredMethods, 4);
     }
 
@@ -30,7 +29,7 @@ public class ReflectionUtils {
     private static List<Member> getProperties(Class<?> clazz, Function<Class<?>, Member[]> propertyGetter) {
         List<Member> properties = new ArrayList<>();
         while (clazz != null) {
-            properties.addAll(Arrays.asList(propertyGetter.apply(clazz)));
+            properties.addAll(asList(propertyGetter.apply(clazz)));
             clazz = clazz.getSuperclass();
         }
         return properties;
