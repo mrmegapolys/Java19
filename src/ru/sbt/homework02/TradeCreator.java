@@ -4,29 +4,21 @@ import ru.sbt.homework02.trades.*;
 
 class TradeCreator {
     static Trade getTrade1(TradeData tradeData) {
-        Trade trade;
-
         switch (tradeData.getType()) {
             case ("FX_SPOT"):
-                trade = new FXSpot(tradeData.getPrice());
-                break;
+                return new FXSpot(tradeData.getPrice());
             case ("BOND"):
-                trade = new Bond(tradeData.getPrice());
-                break;
+                return new Bond(tradeData.getPrice());
             case ("COMMODITY_SPOT"):
-                trade = new CommoditySpot(tradeData.getPrice());
-                break;
+                return new CommoditySpot(tradeData.getPrice());
             case ("IR_SWAP"):
-                trade = new IRSwap(tradeData.getPrice());
-                break;
+                return new IRSwap(tradeData.getPrice());
             default:
-                trade = null;
+                throw new RuntimeException("Unsupported type");
         }
-        return trade;
     }
 
     static Trade getTrade2(TradeData tradeData) {
         return TradeType.valueOf(tradeData.getType()).createTrade(tradeData.getPrice());
     }
-
 }

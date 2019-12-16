@@ -5,17 +5,10 @@ import java.io.IOException;
 
 class Parser {
 
-    public static TradeData parseInput(BufferedReader reader) {
-        String type;
-        double price;
-        try {
-            reader.readLine();
-            type = parseType(reader.readLine());
-            price = parsePrice(reader.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static TradeData parseInput(BufferedReader reader) throws IOException {
+        reader.readLine();
+        String type = parseType(reader.readLine());
+        double price = parsePrice(reader.readLine());
         return new TradeData(type, price);
     }
 
