@@ -5,6 +5,9 @@ import ru.sbt.homework06.serializer.formats.AbstractFormat;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.*;
+
 public class XMLFormat extends AbstractFormat {
     public XMLFormat(int indent) {
         super(indent);
@@ -63,11 +66,7 @@ public class XMLFormat extends AbstractFormat {
 
     private String addIndent(String raw, String indent) {
         if (!raw.contains("<")) return raw;
-        StringBuilder builder = new StringBuilder();
-        for (String s : raw.split("\n")) {
-            builder.append(getIndent()).append(s).append("\n");
-        }
-        return builder.toString();
+        return stream(raw.split("\n")).map(s -> getIndent() + s + "\n").collect(joining());
     }
 
     private String getOpeningTag(String s) {
